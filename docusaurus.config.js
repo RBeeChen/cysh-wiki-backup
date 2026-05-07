@@ -12,10 +12,12 @@ const config = {
   trailingSlash: false,
   onBrokenLinks: 'ignore',
   onBrokenAnchors: 'ignore',
-  onBrokenMarkdownLinks: 'ignore',
 
   markdown: {
     format: 'mdx',
+    hooks: {
+      onBrokenMarkdownLinks: 'ignore',
+    },
     mdx1Compat: {
       comments: true,
       admonitions: true,

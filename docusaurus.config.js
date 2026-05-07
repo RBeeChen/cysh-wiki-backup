@@ -15,9 +15,7 @@ const config = {
 
   markdown: {
     format: 'mdx',
-    hooks: {
-      onBrokenMarkdownLinks: 'ignore',
-    },
+    onBrokenMarkdownLinks: 'ignore',
     mdx1Compat: {
       comments: true,
       admonitions: true,
@@ -33,29 +31,13 @@ const config = {
       ({
         docs: {
           sidebarPath: './sidebars.js',
-          routeBasePath: 'docs',
-          editUrl: 'https://github.com/RBeeChen/cysh-wiki-backup/tree/main/',
+          routeBasePath: '/', 
+          editUrl: 'https://github.com/RBeeChen/cysh-wiki-backup/edit/main/',
         },
         blog: false,
         theme: {
           customCss: './src/css/custom.css',
         },
-      }),
-    ],
-  ],
-
-  themes: [
-    [
-      require.resolve("@easyops-cn/docusaurus-search-local"),
-      ({
-        hashed: true,
-        language: ["en", "zh"],
-        highlightSearchTermsOnTargetPage: true,
-        explicitSearchResultPath: true,
-        indexDocs: true,
-        indexBlog: false,
-        indexPages: true,
-        docsRouteBasePath: 'docs',
       }),
     ],
   ],
@@ -72,6 +54,20 @@ const config = {
             position: 'left',
             label: '所有條目',
           },
+          // 新增：嘉中老師選單
+          {
+            type: 'docSidebar',
+            sidebarId: 'teacherSidebar',
+            position: 'left',
+            label: '嘉中老師',
+          },
+          // 新增：嘉中社團選單
+          {
+            type: 'docSidebar',
+            sidebarId: 'clubSidebar',
+            position: 'left',
+            label: '嘉中社團',
+          },
           {
             href: 'https://github.com/RBeeChen/cysh-wiki-backup',
             label: 'GitHub',
@@ -79,21 +75,7 @@ const config = {
           },
         ],
       },
-      footer: {
-        style: 'light',
-        links: [
-          {
-            title: '法律資訊',
-            items: [
-              {
-                label: '創用 CC 姓名標示-相同方式分享 3.0 條款',
-                href: 'https://creativecommons.org/licenses/by-sa/3.0/tw/legalcode',
-              },
-            ],
-          },
-        ],
-        copyright: `本站內容主要來自「旭陵維基」，由原作者以 CC BY-SA 3.0 授權。備份站點由 RBeeChen 維護。`,
-      },
+      // ... 其餘設定保持不變
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,

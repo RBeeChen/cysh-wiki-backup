@@ -3,8 +3,8 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # 當 main 分支有新的提交（包括編輯網頁）時觸發
-  workflow_dispatch: # 允許手動從 GitHub 介面觸發部署
+      - main  # 當 main 分支有新的提交（包括合併 PR）時觸發
+  workflow_dispatch: # 允許手動觸發部署
 
 permissions:
   contents: write
@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # 獲取所有歷史紀錄以利部署
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -29,6 +29,7 @@ jobs:
         run: npm run build
 
       - name: Deploy to GitHub Pages
+        # 使用專門的 Action 確保部署過程穩定且支援跨帳號協作
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

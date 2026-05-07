@@ -36,6 +36,7 @@ const ALL_CLUBS = [
 
 const TEACHER_BLACKLIST = [
   // '某某老師',
+  '嘉義高中超可怕出題老師'
 ];
 
 const CLUB_BLACKLIST = [

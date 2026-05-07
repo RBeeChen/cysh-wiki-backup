@@ -10,6 +10,7 @@ const path = require('path');
 
 const TEACHER_BLACKLIST = [
   // '某某老師',  // 不想出現在嘉中老師側邊欄的文件
+  '嘉義高中超可怕出題老師'
 ];
 
 const CLUB_BLACKLIST = [

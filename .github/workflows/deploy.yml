@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main  # 當 main 分支有新的提交（包括編輯網頁）時觸發
+  workflow_dispatch: # 允許手動從 GitHub 介面觸發部署
 
 permissions:
   contents: write
@@ -14,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # 獲取所有歷史紀錄以利部署
 
       - uses: actions/setup-node@v4
         with:
@@ -28,6 +29,8 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          # 使用 docusaurus 內建部署指令，並強制指定部署環境
           npm run deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIT_USER: github-actions[bot]

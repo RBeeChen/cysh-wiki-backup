@@ -1,38 +1,28 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: '旭陵維基備份',
   tagline: '嘉義高中維基百科存檔',
   url: 'https://rbeechen.github.io', 
   baseUrl: '/cysh-wiki-backup/', 
-  organizationName: 'RBeeChen', // 確保大小寫與 GitHub 帳號一致
+  organizationName: 'RBeeChen', // 建議改為大寫開頭，與你的 GitHub 帳號一致
   projectName: 'cysh-wiki-backup', 
   deploymentBranch: 'gh-pages',
   trailingSlash: false,
   
-  onBrokenLinks: 'ignore', 
-  onBrokenMarkdownLinks: 'ignore',
+  onBrokenLinks: 'ignore',
   onBrokenAnchors: 'ignore',
+  // onBrokenMarkdownLinks 從這裡移除
 
-  // ...其餘設定保持不變...
+  markdown: {
+    format: 'mdx',
+    // 移到這裡（符合 Docusaurus v3/v4 規範）
+    onBrokenMarkdownLinks: 'ignore', 
+    mdx1Compat: {
+      comments: true,
+      admonitions: true,
+      headingIds: true,
+    },
+    mermaid: true,
+  },
   
-  presets: [
-    [
-      'classic',
-      ({
-        docs: {
-          sidebarPath: './sidebars.js',
-          routeBasePath: 'docs',
-          // 這裡建議用相對路徑，Docusaurus 會自動幫你補完
-          editUrl: 'https://github.com/RBeeChen/cysh-wiki-backup/tree/main/',
-        },
-        // ...
-      }),
-    ],
-  ],
-  
-  // ...
-};
-
-export default config;
+  // ... 其餘部分保持不變

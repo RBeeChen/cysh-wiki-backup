@@ -12,11 +12,11 @@ const config = {
   trailingSlash: false,
   onBrokenLinks: 'ignore',
   onBrokenAnchors: 'ignore',
-  // 修正：在 Docusaurus v3 中，此選項應位於頂層而非 markdown 區塊內
-  onBrokenMarkdownLinks: 'ignore',
 
   markdown: {
     format: 'mdx',
+    // 修正：依照日誌建議，將此選項移入 markdown 區塊以符合 v3/v4 規範
+    onBrokenMarkdownLinks: 'ignore',
     mdx1Compat: {
       comments: true,
       admonitions: true,

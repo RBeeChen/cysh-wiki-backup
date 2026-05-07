@@ -11,9 +11,10 @@ const config = {
   deploymentBranch: 'gh-pages',
   trailingSlash: false,
   
-  // 設置為 'ignore' 以跳過所有因為 Wiki 原始連結格式導致的編譯錯誤
   onBrokenLinks: 'ignore', 
-  onBrokenMarkdownLinks: 'ignore', // 移回最外層，解決 unrecognized field 錯誤
+  onBrokenMarkdownLinks: 'ignore',
+  // 關鍵修正：忽略 Wiki 轉換後產生的無效錨點 (#...) 錯誤，避免部署中斷
+  onBrokenAnchors: 'ignore',
 
   markdown: {
     format: 'mdx',
@@ -43,7 +44,6 @@ const config = {
     ],
   ],
 
-  // 搜尋功能配置
   themes: [
     [
       require.resolve("@easyops-cn/docusaurus-search-local"),

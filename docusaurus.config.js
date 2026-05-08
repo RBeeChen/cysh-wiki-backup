@@ -69,8 +69,18 @@ const config = {
             label: '嘉中社團',
           },
           {
-            to: '/sync-page',
-            label: '與旭陵維基同步',
+            to: '/contribute',
+            label: '申請加入新介面',
+            position: 'right',
+          },
+          {
+            to: '/edit-guide',
+            label: '編輯教學',
+            position: 'right',
+          },
+          {
+            href: 'https://cysh.cywiki.win/index.php/%E9%A6%96%E9%A0%81',
+            label: '旭陵維基（原版）',
             position: 'right',
           },
           {

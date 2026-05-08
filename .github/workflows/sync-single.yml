@@ -1,0 +1,77 @@
+name: 與旭陵維基同步（單頁）
+
+on:
+  workflow_dispatch:
+    inputs:
+      page_title:
+        description: '條目名稱（例如：熱音社）'
+        required: true
+      triggered_by:
+        description: '觸發者 GitHub 帳號'
+        required: false
+        default: 'unknown'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync-single:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 專案
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.SYNC_TOKEN }}
+
+      - name: 設定 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安裝 Python 相依套件
+        run: |
+          pip install cloudscraper beautifulsoup4 markdownify
+
+      - name: 執行單頁備份與轉換
+        id: sync
+        run: |
+          python html_to_markdown.py \
+            --mode=single \
+            --page="${{ github.event.inputs.page_title }}"
+        timeout-minutes: 10
+
+      - name: 建立同步分支並送出 PR
+        run: |
+          PAGE="${{ github.event.inputs.page_title }}"
+          BRANCH="sync/single-$(echo "$PAGE" | sed 's/[^a-zA-Z0-9]/-/g')-$(date +%Y%m%d-%H%M%S)"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add "docs/${PAGE}.md" 2>/dev/null || true
+          # 萬用字元也 add 一次（處理特殊字元）
+          git add docs/
+          if git diff --cached --quiet; then
+            echo "::notice::沒有偵測到任何變更（可能找不到對應頁面）。"
+            echo "NOT_FOUND=true" >> $GITHUB_ENV
+            exit 0
+          fi
+          git commit -m "sync: 同步單頁「${PAGE}」$(date +%Y-%m-%d)"
+          git push origin "$BRANCH"
+          gh pr create \
+            --title "🔄 單頁同步：${PAGE} $(date +%Y-%m-%d)" \
+            --body "## 單頁同步 PR
+
+          此 PR 由「讓本頁與旭陵維基同步」功能自動產生。
+
+          - 條目名稱：**${PAGE}**
+          - 觸發者：${{ github.event.inputs.triggered_by }}
+          - 觸發時間：$(date '+%Y-%m-%d %H:%M:%S UTC')
+          - 原始來源：https://cysh.cywiki.win/index.php/${PAGE}
+
+          **請管理員審核後再 Merge。**" \
+            --base main \
+            --head "$BRANCH"
+        env:
+          GH_TOKEN: ${{ secrets.SYNC_TOKEN }}

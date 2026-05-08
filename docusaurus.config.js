@@ -42,22 +42,6 @@ const config = {
     ],
   ],
 
-  themes: [
-    [
-      require.resolve("@easyops-cn/docusaurus-search-local"),
-      ({
-        hashed: true,
-        language: ["en", "zh"],
-        highlightSearchTermsOnTargetPage: true,
-        explicitSearchResultPath: true,
-        indexDocs: true,
-        indexBlog: false,
-        indexPages: true,
-        docsRouteBasePath: '/',
-      }),
-    ],
-  ],
-
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -83,6 +67,21 @@ const config = {
             sidebarId: 'clubSidebar',
             position: 'left',
             label: '嘉中社團',
+          },
+          {
+            to: '/contribute',
+            label: '申請加入新介面',
+            position: 'right',
+          },
+          {
+            to: '/edit-guide',
+            label: '編輯教學',
+            position: 'right',
+          },
+          {
+            href: 'https://cysh.cywiki.win/index.php/%E9%A6%96%E9%A0%81',
+            label: '旭陵維基（原版）',
+            position: 'right',
           },
           {
             href: 'https://github.com/RBeeChen/cysh-wiki-backup',
